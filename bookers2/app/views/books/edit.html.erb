@@ -1,51 +1,29 @@
-<p id="notice"></p>
+
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
       <h1>Editing Book</h1>
-
-      <form action="/books/50733" accept-charset="UTF-8" method="post">
-        <input name="utf8" type="hidden" value="✓" /><input
-          type="hidden"
-          name="_method"
-          value="patch"
-        /><input
-          type="hidden"
-          name="authenticity_token"
-          value="6pTyDXMHIPlRaWlNZtCEVaPvrlv6smd7l7DsvbZbUGt6GDsnt28fr9pZni/4eSNaoG9IguzfDn0Nm90aJrKgrQ=="
-        />
-        <div class="form-group">
-          <label for="book_title">Title</label>
-          <input
-            class="form-control book_title"
-            type="text"
-            value="a"
-            name="book[title]"
-            id="book_title"
-          />
-        </div>
-        <div class="form-group">
-          <label for="book_opinion">Opinion</label>
-          <textarea
-            class="form-control book_body"
-            name="book[body]"
-            id="book_body"
-          >
-a</textarea
-          >
-        </div>
-        <div class="form-group">
-          <input
-            type="submit"
-            name="commit"
-            value="Update Book"
-            class="btn btn-success"
-            data-disable-with="Update Book"
-          />
-        </div>
-      </form>
-      <a class="book_50733" href="/books/50733">Show</a> |
-      <a class="back" href="/books">Back</a>
+      <% if @book.errors.any? %>
+        <h2><%= @book.errors.count %> error prohibited this obj from being saved:</h2><br>
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+          <li><%=message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <%= form_with model:@book do |f| %>
+      <div class="form-group">
+        <label for="book_title">Title</label>
+        <%=f.text_field :title,autofocus: true %>
+      </div>
+      <div class="form-group">
+        <label for="book_body">Body</label>
+        <%=f.text_area :body%>
+      </div>
+      <div class="form-group"><%=f.submit "Update Book" %></div>
+      <% end %>
+      <%=link_to "Show",book_path(@book.id) %>
+      <%=link_to "Back",books_path %>
     </div>
   </div>
 </div>
